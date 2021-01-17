@@ -11,3 +11,14 @@
   .position-absolute {
     position: absolute; 
   }
+
+  .badge {
+    
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      min-height: 60px;
+      min-width: 1024px;
+      border-radius: 0px !important;
+  
+  }

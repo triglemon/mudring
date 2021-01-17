@@ -11,7 +11,7 @@ function Video() {
   const canvasRef = useRef();
   const [output, setOutput] = useState({ expressions: "loading" });
   const [run, setRun] = useState();
-  const [emotion , setEmotion] = useState(); 
+  const [emotion, setEmotion] = useState();
 
 
   useEffect(() => {
@@ -67,28 +67,28 @@ function Video() {
 
   const getEmotion = async (expressions) => {
     var big = {
-      name: "" ,
+      name: "",
       value: null
     };
 
     for (var key in expressions) {
       if (expressions.hasOwnProperty(key)) {
-        if (big.value < expressions[key]){
+        if (big.value < expressions[key]) {
           big = {
-            name : key ,
-            value : expressions[key]
+            name: key,
+            value: expressions[key]
           }
         }
       }
     }
     console.log(`name : ${big.name} value: ${big.value}`);
 
-    if (big.value > 0){
-      
-      setEmotion(big.name);
+    if (big.value > 0) {
+
+      setEmotion(big.name.toUpperCase());
       console.log(emotion)
-    }else {
-      return "please wait"
+    } else {
+      setEmotion("please wait");
     }
 
 
@@ -96,14 +96,18 @@ function Video() {
 
   return (
     <div className="App">
-      <span>{initializing ? 'Initializing' : 'Ready'}</span>
+      
       <div className="display-flex justify-content-center">
         <video ref={videoRef} autoPlay muted height={videoHeight} width={videoWidth} onPlay={handleVideoOnPlay} />
         <canvas ref={canvasRef} className="position-absolute" />
       </div>
-      <div >
-        {initializing ? "loading" : JSON.stringify(emotion)}
+      <div className="row">
+
+        <span className="badge badge-dark" style={{ paddingLeft: '30px', paddingRight: '30px' }}><h1>{initializing ? "LOADING" : emotion}</h1></span>
+
       </div>
+
+
 
     </div>
   );
