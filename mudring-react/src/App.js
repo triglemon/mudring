@@ -7,6 +7,7 @@ function App() {
   const videoWidth = 640;
   const [initializing, setInitializing] = useState(false)
   const videoRef = useRef();
+  const audioRef = useRef();
   const canvasRef = useRef();
 
   useEffect(() => {
@@ -25,8 +26,11 @@ function App() {
 
   const startVideo = () => {
     navigator.getUserMedia({
-      video : {}
-    }, stream => videoRef.current.srcObject = stream,
+      audio: true, video : true
+    }, stream => {
+      videoRef.current.srcObject = new MediaStream(stream.getVideoTracks());
+      audioRef.current.srcObject = new MediaStream(stream.getAudioTracks());
+    },
     function (){console.warn("Error getting audio stream from getUserMedia")})
   }
 
@@ -55,7 +59,8 @@ function App() {
     <div className="App">
       <span>{initializing ? 'Initializing' : 'Ready'}</span>
       <div>
-        <video ref={videoRef} autoPlay muted  height={videoHeight} width={videoWidth} onPlay={handleVideoOnPlay}/>
+        <audio ref={audioRef} autoPlay></audio>
+        <video ref={videoRef} autoPlay height={videoHeight} width={videoWidth} onPlay={handleVideoOnPlay}/>
         <canvas ref={canvasRef} />
       </div>
     </div>
